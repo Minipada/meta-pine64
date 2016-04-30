@@ -10,9 +10,8 @@ inherit deploy
 S = "${WORKDIR}/git"
 
 SRCBRANCH = "master"
-SRC_URI = "git://github.com/longsleep/sunxi-pack-tools.git;protocol=git;branch=${SRCBRANCH} \
-           file://0001-disable-strip.patch"
-
+SRC_URI = "git://github.com/longsleep/sunxi-pack-tools.git;protocol=git;branch=${SRCBRANCH}"
+#           file://0001-disable-strip.patch"
 # This points at the 'Added script tool from lichee_linux_310.tar.gz Allwinner Linux ...' tag
 SRCREV ?= "19a7afb74035bb72ecb5878e73699880a9547131"
 
@@ -37,16 +36,18 @@ do_compile() {
   make CC=${BUILD_CC}
 }
 
-do_install() {
+#do_install() {
+#  install -d ${D}${includedir}
+#  mkdir -p ${D}${includedir}/sunxi-pack-tools
+#  install -d ${D}${includedir}/sunxi-pack-tools
+#  install bin/* ${D}${includedir}/sunxi-pack-tools
+#  cp bin/merge_uboot ${D}${includedir}
+#  install -m 0755 bin/script ${D}${includedir}
+#  install -m 0755 bin/update_uboot ${D}${includedir}
+#  install -m 0755 bin/update_uboot_fdt ${D}${includedir}
+#}
+
+do_install(){
   :
 }
 
-do_deploy() {
-  install -d ${D}${bindir}
-  install -m 0755 bin/merge_uboot ${D}/${bindir}
-  install -m 0755 bin/script ${D}/${bindir}
-  install -m 0755 bin/update_uboot ${D}/${bindir}
-  install -m 0755 bin/update_uboot_fdt ${D}/${bindir}
-}
-
-addtask deploy before do_build after do_compile

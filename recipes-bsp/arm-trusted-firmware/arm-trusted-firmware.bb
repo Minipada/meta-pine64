@@ -36,6 +36,7 @@ do_compile() {
 
 #TODO Find the good folder to copy this file
 do_install() {
-  install -d ${D}${bindir}
-  install -m 0644 ${S}/build/${PLATEFORM}/release/bl31.bin ${D}/${bindir}
+#  install -d ${D}${includedir}
+#  install -m 0644 ${S}/build/${PLATEFORM}/release/bl31.bin ${D}{bindir}
+  :
 }
