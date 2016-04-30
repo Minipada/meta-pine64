@@ -1,0 +1,12 @@
+diff --git a/merge_uboot/makefile b/merge_uboot/makefile
+index 7cc2c9c..6d868b1 100644
+--- a/merge_uboot/makefile
++++ b/merge_uboot/makefile
+@@ -1,6 +1,6 @@
+ objects =  merge_uboot.o
+ edit:$(objects)
+-	gcc -o merge_uboot $(objects) -static
++	gcc -o merge_uboot $(objects) -static --disable-stripping
+ 	rm -rf $(objects)
+ 
+ 
