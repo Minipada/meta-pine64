@@ -77,5 +77,6 @@ do_compile_append(){
   ${SUNXI_PACK_TOOLS}/update_uboot ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin ${UBOOT_TMP_BUILD_DIR}/sys_config.bin
 
   echo "Done - created ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin"
+  cp ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin ${TMPDIR}/work/pine64-poky-linux/u-boot-pine64/1-r0/image/boot/u-boot.bin
 }
 

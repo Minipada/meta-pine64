@@ -10,19 +10,10 @@ inherit image_types
 #    8*1024                 -> 32*1024                          - 
 #    32*1024                -> 2048*1024                        - 
 #    2048*1024              -> BOOT_SPACE                       - bootloader and kernel
-#
-#
-#
-#
-#
-#    0                      -> 8*1024                           - reserverd
-#    8*1024                 -> 32*1024                          - 
-#    32*1024                -> 2048*1024                        - 
-#    2048*1024              -> BOOT_SPACE                       - bootloader and kernel
 
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_sunxi-sdimg = "${SDIMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP_pine64-sdimg = "${SDIMG_ROOTFS_TYPE}"
 
 # Boot partition volume id
 BOOTDD_VOLUME_ID ?= "${MACHINE}"
@@ -38,7 +29,7 @@ IMAGE_ROOTFS_ALIGNMENT = "2048"
 SDIMG_ROOTFS_TYPE ?= "ext4"
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
-IMAGE_DEPENDS_sunxi-sdimg += " \
+IMAGE_DEPENDS_pine64-sdimg += " \
 			parted-native \
 			mtools-native \
 			dosfstools-native \
@@ -49,7 +40,7 @@ IMAGE_DEPENDS_sunxi-sdimg += " \
 rootfs[depends] += "virtual/kernel:do_deploy"
 
 # SD card image name
-SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.sunxi-sdimg"
+SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.pine64-sdimg"
 
 IMAGEDATESTAMP = "${@time.strftime('%Y.%m.%d',time.gmtime())}"
 
@@ -59,6 +50,7 @@ IMAGE_CMD_pine64-sdimg () {
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE_ALIGNED} - ${BOOT_SPACE_ALIGNED} % ${IMAGE_ROOTFS_ALIGNMENT})
 	SDIMG_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + $ROOTFS_SIZE + ${IMAGE_ROOTFS_ALIGNMENT})
+  #SDIMG_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + $ROOTFS_SIZE)
 
 	# Initialize sdcard image file
 	dd if=/dev/zero of=${SDIMG} bs=1 count=0 seek=$(expr 1024 \* ${SDIMG_SIZE})
@@ -77,6 +69,7 @@ IMAGE_CMD_pine64-sdimg () {
 	rm -f ${WORKDIR}/boot.img
 	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
 
+#new
 	mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ::uImage
 
 	# Copy device tree file
@@ -118,6 +111,6 @@ IMAGE_CMD_pine64-sdimg () {
 	fi
 
 	#write u-boot and spl at the beginint of sdcard in one shot
-	dd if=${DEPLOY_DIR_IMAGE}/u-boot-sunxi-with-spl.bin of=${SDIMG} bs=1024 seek=8 conv=notrunc
+	dd if=${DEPLOY_DIR_IMAGE}/u-boot.bin of=${SDIMG} bs=1024 seek=8 conv=notrunc
 
 }
