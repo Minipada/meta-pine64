@@ -5,11 +5,13 @@ require recipes-bsp/u-boot/u-boot.inc
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://Licenses/gpl-2.0.txt;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-DEPENDS += "sunxi-pack-tools arm-trusted-firmware"
+DEPENDS += "sunxi-pack-tools arm-trusted-firmware busybox"
 
 PROVIDES += "u-boot"
+UBOOT_MAKE_TARGET = "pine64"
+UBOOT_MAKE_TARGET = "u-boot.bin"
+UBOOT_SUFFIX = "img"
 COMPATIBLE_MACHINE = "pine64"
-
 
 SRC_URI = " \
 	git://github.com/longsleep/u-boot-pine64.git;protocol=git;branch=pine64-hacks \
@@ -49,7 +51,7 @@ do_compile(){
   make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 }
 
-do_compile_append(){
+generate_uboot(){
   mkdir -p ${UBOOT_TMP_BUILD_DIR}
 
   cp -avf ${TRUSTED_FIRMWARE}/bl31.bin ${UBOOT_TMP_BUILD_DIR}
@@ -77,6 +79,23 @@ do_compile_append(){
   ${SUNXI_PACK_TOOLS}/update_uboot ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin ${UBOOT_TMP_BUILD_DIR}/sys_config.bin
 
   echo "Done - created ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin"
-  cp ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin ${TMPDIR}/work/pine64-poky-linux/u-boot-pine64/1-r0/image/boot/u-boot.bin
+  #cp ${UBOOT_TMP_BUILD_DIR}/u-boot-with-dtb.bin ${TMPDIR}/work/pine64-poky-linux/u-boot-pine64/1-r0/image/boot/u-boot.bin
 }
 
+BUSYBOX_FOLDER="/home/dbensoussan/new_poky/poky/build/tmp/work/aarch64-poky-linux/busybox/1.24.1-r0/packages-split/busybox"
+
+generate_uenv(){
+  touch /home/dbensoussan/poky/build/tmp/work/pine64-poky-linux/u-boot-pine64/1-r0/boot.scr
+}
+
+generate_initrd(){
+  cd ${BUSYBOX_FOLDER}
+  find . | cpio -H newc -o > initrd
+  cat initrd | gzip >initrd.img
+}
+
+do_compile_append() {
+  generate_uboot
+  generate_initrd
+  generate_uenv
+}
