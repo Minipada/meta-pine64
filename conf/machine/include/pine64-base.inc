@@ -19,8 +19,8 @@ SERIAL_CONSOLE = "115200 ttyS0"
 
 #TODO Add Kernel device Tree
 KERNEL_DEVICETREE ?= " \
-  sun50i-a64-pine64.dtb \
-  sun50i-a64-pine64-plus.dtb \
+  allwinner/sun50i-a64-pine64.dtb \
+  allwinner/sun50i-a64-pine64-plus.dtb \
 "
 
 KERNEL_IMAGETYPE="Image"
