@@ -12,7 +12,6 @@ SRCREV_pn-${PN} = "6c0b852b9ab4688534c8e978d2d55cf8a26cbd05"
 
 KERNEL_DEFCONFIG ?= "defconfig"
 KERNEL_DEFCONFIG_pine64 ?= "defconfig"
-KERNEL_DEVICETREE = "allwinner/sun50i-a64-pine64.dtb"
 
 DEPENDS_aarch64 += "libgcc"
 
@@ -36,8 +35,8 @@ kernel_configure_variable() {
 }
 
 do_configure_prepend() {
-#  kernel_configure_variable BINFMT_ELF y
   kernel_configure_variable BINFMT_ELF y
   kernel_configure_variable COMPAT y
   kernel_configure_variable COMPAT_BINFMT_ELF y
+  kernel_configure_variable VIRTUALIZATION n
 }
