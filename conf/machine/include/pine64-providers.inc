@@ -1,6 +1,7 @@
 # Pine64 BSP default providers
 
 PREFERRED_PROVIDER_virtual/kernel="linux-pine64"
+PREFERRED_PROVIDER_virtual/bootloader="u-boot-64"
 PREFERRED_PROVIDER_u-boot ?= "u-boot-pine64"
 PREFERRED_PROVIDER_virtual/xserver ?= "xserver-xorg"
 PREFERRED_PROVIDER_virtual/egl ?= "userland"

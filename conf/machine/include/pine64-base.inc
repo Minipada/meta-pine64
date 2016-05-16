@@ -6,7 +6,7 @@ SOC_FAMILY = "sun50i"
 
 IMAGE_FSTYPES ?= "tar.bz2 ext3 pine64-sdimg"
 
-#SERIAL_CONSOLE = "115200 ttyS0"
+SERIAL_CONSOLE = "115200 ttyS0"
 
 #TODO Add XSERVER
 #XSERVER = " \
@@ -18,14 +18,15 @@ IMAGE_FSTYPES ?= "tar.bz2 ext3 pine64-sdimg"
 #    "
 
 #TODO Add Kernel device Tree
-#KERNEL_DEVICETREE ?= " \
-#  sun50i-a64-pine64.dtb \
-#"
+KERNEL_DEVICETREE ?= " \
+  sun50i-a64-pine64.dtb \
+  sun50i-a64-pine64-plus.dtb \
+"
 
-#KERNEL_IMAGETYPE="Image"
+KERNEL_IMAGETYPE="Image"
 
 #TODO Check which one the board would need
-#MACHINE_FEATURES += "usbhost keyboard screen alsa wifi sdio"
+MACHINE_FEATURES += "usbhost keyboard screen alsa wifi sdio"
 
 #MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
 
