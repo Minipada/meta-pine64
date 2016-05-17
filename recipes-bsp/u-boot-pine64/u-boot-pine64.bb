@@ -10,7 +10,7 @@ DEPENDS += "sunxi-pack-tools arm-trusted-firmware busybox"
 PROVIDES += "u-boot"
 UBOOT_MAKE_TARGET = "pine64"
 UBOOT_MAKE_TARGET = "u-boot.bin"
-UBOOT_SUFFIX = "img"
+UBOOT_SUFFIX = "bin"
 COMPATIBLE_MACHINE = "pine64"
 
 SRC_URI = " \
