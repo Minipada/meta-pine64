@@ -18,17 +18,17 @@ SERIAL_CONSOLE = "115200 ttyS0"
 #    "
 
 #TODO Add Kernel device Tree
-KERNEL_DEVICETREE ?= " \
-  allwinner/sun50i-a64-pine64.dtb \
-  allwinner/sun50i-a64-pine64-plus.dtb \
-"
+#KERNEL_DEVICETREE ?= " \
+#  allwinner/sun50i-a64-pine64.dtb \
+#  allwinner/sun50i-a64-pine64-plus.dtb \
+#"
 
-KERNEL_IMAGETYPE="Image"
+#KERNEL_IMAGETYPE="Image"
 
 #TODO Check which one the board would need
 MACHINE_FEATURES += "usbhost keyboard screen alsa wifi sdio"
 
-#MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
+MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
 
 #TODO Check which files are needed
 #IMAGE_BOOT_FILES ?= "my-folder/* ${KERNEL_IMAGETYPE};${SDIMG_KERNELIMAGE}"
